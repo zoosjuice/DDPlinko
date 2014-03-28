@@ -21,6 +21,7 @@
 		33E482CD18DE556D00366BDC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33E482AF18DE556C00366BDC /* UIKit.framework */; };
 		33E482D518DE556D00366BDC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 33E482D318DE556D00366BDC /* InfoPlist.strings */; };
 		33E482D718DE556D00366BDC /* DDPlinkoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 33E482D618DE556D00366BDC /* DDPlinkoTests.m */; };
+		33E482E218DE55D600366BDC /* DDPegView.m in Sources */ = {isa = PBXBuildFile; fileRef = 33E482E118DE55D600366BDC /* DDPegView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,8 @@
 		33E482D218DE556D00366BDC /* DDPlinkoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DDPlinkoTests-Info.plist"; sourceTree = "<group>"; };
 		33E482D418DE556D00366BDC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		33E482D618DE556D00366BDC /* DDPlinkoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDPlinkoTests.m; sourceTree = "<group>"; };
+		33E482E018DE55D600366BDC /* DDPegView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDPegView.h; sourceTree = "<group>"; };
+		33E482E118DE55D600366BDC /* DDPegView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDPegView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +122,8 @@
 				33E482C118DE556C00366BDC /* DDViewController.m */,
 				33E482C318DE556C00366BDC /* Images.xcassets */,
 				33E482B218DE556C00366BDC /* Supporting Files */,
+				33E482E018DE55D600366BDC /* DDPegView.h */,
+				33E482E118DE55D600366BDC /* DDPegView.m */,
 			);
 			path = DDPlinko;
 			sourceTree = "<group>";
@@ -251,6 +256,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				33E482BC18DE556C00366BDC /* DDAppDelegate.m in Sources */,
+				33E482E218DE55D600366BDC /* DDPegView.m in Sources */,
 				33E482C218DE556C00366BDC /* DDViewController.m in Sources */,
 				33E482B818DE556C00366BDC /* main.m in Sources */,
 			);
