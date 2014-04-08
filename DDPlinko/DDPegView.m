@@ -18,7 +18,7 @@
     if (self) {
         // Initialization code
         
-        
+        self.backgroundColor = [UIColor clearColor];
     }
     return self;
 }
@@ -30,7 +30,6 @@
     [[UIColor purpleColor] setFill];
     ovalPath.lineWidth = LINE_WIDTH;
     [ovalPath stroke];
-//    [ovalPath fill];
 }
 
 @end

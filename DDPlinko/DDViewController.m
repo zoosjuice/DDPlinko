@@ -12,6 +12,10 @@
 @interface DDViewController ()
 {
     NSMutableArray *viewArray;
+    
+    UIDynamicAnimator *animator;
+    UIGravityBehavior *gravity;
+    UICollisionBehavior *collision;
 }
 
 @property (weak, nonatomic) IBOutlet UIView *pegView;
@@ -24,8 +28,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *pointLabel2;
 @property (weak, nonatomic) IBOutlet UILabel *pointLabel3;
 @property (weak, nonatomic) IBOutlet UILabel *pointLabel4;
-
-@property (nonatomic, strong) UIDynamicAnimator *aNimator;
 
 @property (weak, nonatomic) IBOutlet UILabel *mainLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
@@ -48,6 +50,29 @@
 //        [self.view addSubview:aview];
 //        [viewArray addObject:aview];
 //    }
+    
+    animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
+    
+    gravity = [UIGravityBehavior new];
+    [animator addBehavior:gravity];
+    
+    collision = [UICollisionBehavior new];
+    [animator addBehavior:collision];
+    
+    //Layout the pegs in a grid
+    CGPoint offset = CGPointMake(40, 100);
+    for (int x = 0; x<8; x++) {
+        for (int y = 0; y<10; y++) {
+            
+            float xOffset = y%2 ? 0 : 15;
+            
+            DDPegView *peg = [[DDPegView alloc] initWithFrame:CGRectMake(offset.x + x * 30 + xOffset, offset.y + y * 30, 14, 14)];
+            
+            [self.view addSubview:peg];
+            
+            [collision addItem:peg];
+        }
+    }
     
     self.pointCube1.layer.cornerRadius = 20;
     self.pointCube2.layer.cornerRadius = 20;
@@ -86,43 +111,19 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    UIView *aView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 14, 14)];
-    aView.backgroundColor = [UIColor grayColor];
-    aView.layer.cornerRadius = 7;
+    CGPoint location = [[touches anyObject] locationInView:self.view];
     
-    UITouch *aTouch = [touches anyObject];
-    CGPoint touchPoint = [aTouch locationInView:self.view];
-    aView.center = touchPoint;
-    if (CGRectContainsPoint(self.mainLabel.frame, touchPoint)) {
+    if (CGRectContainsPoint(self.mainLabel.frame, location)) {
+        //Spawn a ball at the touch
+        float size = 10;
+        UIView *ball = [[UIView alloc] initWithFrame:CGRectMake(location.x - size/2, location.y - size/2, size, size)];
+        ball.backgroundColor = [UIColor blackColor];
+        ball.layer.cornerRadius = 6;
+        [self.view addSubview:ball];
         
-        [self.view addSubview:aView];
-        self.aNimator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
-        
-        UIGravityBehavior *gravity = [[UIGravityBehavior alloc] initWithItems:@[aView]];
-        CGVector vector = CGVectorMake(0.0, 1.0);
-        [gravity setGravityDirection:vector];
-        [self.aNimator addBehavior:gravity];
-        int i = 0;
-        for (DDPegView *view in self.pegView.subviews) {
-            UICollisionBehavior *collisionBehavior = [[UICollisionBehavior alloc] initWithItems:@[aView]];
-            UIBezierPath *bumperPath = [UIBezierPath bezierPathWithOvalInRect:view.frame];
-            [collisionBehavior addBoundaryWithIdentifier:@"Bumper" forPath:bumperPath];
-            [collisionBehavior setTranslatesReferenceBoundsIntoBoundary:YES];
-            [collisionBehavior setCollisionMode:UICollisionBehaviorModeEverything];
-            [self.aNimator addBehavior:collisionBehavior];
-            i++;
-            NSLog(@"%i", i);
-        }
-        
-        
-        UIDynamicItemBehavior *propertiesBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[aView]];
-        propertiesBehavior.elasticity = .20f;
-        
-        [self.aNimator addBehavior:propertiesBehavior];
+        [gravity addItem:ball];
+        [collision addItem:ball];
     }
-    
-
-    
 
 }
 
