@@ -16,6 +16,7 @@
     UIDynamicAnimator *animator;
     UIGravityBehavior *gravity;
     UICollisionBehavior *collision;
+    UIDynamicItemBehavior *pegBehavior;
 }
 
 @property (weak, nonatomic) IBOutlet UIView *pegView;
@@ -57,7 +58,12 @@
     [animator addBehavior:gravity];
     
     collision = [UICollisionBehavior new];
+    collision.translatesReferenceBoundsIntoBoundary = YES;
     [animator addBehavior:collision];
+    
+    pegBehavior = [UIDynamicItemBehavior new];
+    [animator addBehavior:pegBehavior];
+    
     
     //Layout the pegs in a grid
     CGPoint offset = CGPointMake(40, 100);
@@ -71,6 +77,7 @@
             [self.view addSubview:peg];
             
             [collision addItem:peg];
+            [pegBehavior addItem:peg];
         }
     }
     
