@@ -16,7 +16,6 @@
     UIDynamicAnimator *animator;
     UIGravityBehavior *gravity;
     UICollisionBehavior *collision;
-    UIDynamicItemBehavior *pegBehavior;
 }
 
 @property (weak, nonatomic) IBOutlet UIView *pegView;
@@ -61,9 +60,8 @@
     collision.translatesReferenceBoundsIntoBoundary = YES;
     [animator addBehavior:collision];
     
-    pegBehavior = [UIDynamicItemBehavior new];
-    [animator addBehavior:pegBehavior];
-    
+    //Add score boundaries
+    [collision addBoundaryWithIdentifier:@"bottomBar" fromPoint:CGPointMake(0, self.bottomBar.frame.origin.y) toPoint:CGPointMake(320, self.bottomBar.frame.origin.y)];
     
     //Layout the pegs in a grid
     CGPoint offset = CGPointMake(40, 100);
@@ -75,9 +73,9 @@
             DDPegView *peg = [[DDPegView alloc] initWithFrame:CGRectMake(offset.x + x * 30 + xOffset, offset.y + y * 30, 14, 14)];
             
             [self.view addSubview:peg];
+            UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:peg.frame];
             
-            [collision addItem:peg];
-            [pegBehavior addItem:peg];
+            [collision addBoundaryWithIdentifier:@"id" forPath:path];
         }
     }
     
